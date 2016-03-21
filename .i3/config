@@ -1,0 +1,305 @@
+# i3 config file (v4)
+#
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+#
+# Thisonfig file uses keycodes (bindsym) and was written for the QWERTY
+# layout.
+#
+# To get a config file with the same key positions, but for your current
+# layout, use the i3-config-wizard
+#
+#####################################################
+set $yellow	#b58900
+set $orange	#cb4b16
+set $red	#dc322f
+set $magenta	#d33682
+set $violet	#6c71c4
+set $blue	#268bd2
+set $cyan	#2aa198
+set $green	#859900
+set $baseA4 #1c1d1c
+set $baseA3 #002b36
+set $baseA2 #073642
+set $baseA1 #586e75
+set $baseA0 #657b83
+set $baseB0 #839496
+set $baseB1 #93a1a1
+set $baseB2 #eee8d5
+set $baseB3 #fdf6e3
+set $custom #1c5766
+set $workspace1 "1:Random"
+set $workspace2 "2:Messenger"
+set $workspace3 "3:Firefox"
+set $workspace4 "4:Nautilus"
+set $workspace5 "5"
+set $workspace6 "6:Steam"
+set $workspace7 "7"
+set $workspace8 "8"
+set $workspace9 "9"
+set $workspace10 "10:Spotify"
+
+#########################
+##ustawienia pod i3-gaps#
+#########################
+gaps inner 10
+gaps outer 0
+smart_gaps on
+#########################
+
+###################
+# solarized (clean)
+###################
+#clientclass 			border  backgr. text 	indicator
+client.focused  		#222 $baseA4 $green $baseA1
+client.unfocused	    #222 $baseA4 $baseA1 $baseA1
+client.urgent 	 		$orange $orange $baseB3 $red
+client.urgent 	 		$yellow $yellow $baseB3 $orange
+client.focused_inactive 	$baseA2 $green $baseA2 $baseA1
+client.focused_inactive	#222 $baseA1 $baseA1 $baseA1
+
+##przypisanie okien do workspaceów, znaleźć name i class używając xprop
+assign [title="Messenger"] → $workspace2
+    for_window [title="Messenger"] border none
+
+assign [title="Steam"] → $workspace6
+    for_window [title="Steam"] border none
+
+assign [class="Firefox"] → $workspace3
+	for_window [class="Firefox"] border none
+
+for_window [class="Nautilus"] move to workspace $workspace4
+for_window [class="Spotify"] move to workspace $workspace10
+
+##AUTOSTART###
+##dropbox
+exec --no-startup-id dropbox start
+##dodatki z gnoma
+exec --no-startup-id gnome-settings-daemon
+##tapeta
+exec --no-startup-id nitrogen --restore
+exec --no-startup-id compton -b
+## title bar zmniejszenie
+new_window 1pixel
+
+
+##podświetlenie i glośność
+bindcode 232 exec xbacklight -dec 10
+bindcode 233 exec xbacklight -inc 10
+bindcode 121 exec amixer -D pulse set Master 1+ toggle
+bindcode 122 exec amixer -D pulse sset Master 5%-
+bindcode 123 exec amixer -D pulse sset Master 5%+
+
+
+##launcher rzeczy
+bindsym Mod4+Shift+d exec --no-startup-id rofi -show run -font "snap 10" -fg "#505050" -bg "#000000" -hlfg "#ffb964" -hlbg "#000000" -o 85 -.desktop
+##screenshot
+bind Mod4+118 exec --no-startup-id gnome-screenshot
+
+##power menu
+set $sysmenu "system:  [q]uit env. [l]ock [p]oweroff  [r]eboot"
+bindcode 124 mode $sysmenu
+mode $sysmenu {
+    bindsym r         exec shutdown -r now; mode "default"
+    bindsym q         exit; mode "default"
+    bindsym l         exec i3lock -i ~/Pobrane/BSOD.png -nu; mode "default"
+    bindsym p         exec shutdown -P now ; mode "default"
+    bindsym Return    mode "default"
+    bindsym Escape    mode "default"
+}
+
+
+##menu narzędzia
+set $toolsmenu "[u]pdate&&upgrade [h]top [p]ing-google [w]icd-gtk"
+bindsym Mod4+Shift+t mode $toolsmenu
+mode $toolsmenu {
+   bindsym h exec --no-startup-id xterm -name sys_htop -e "htop" ; mode "default"
+   bindsym u exec --no-startup-id xterm -name sys_update -e "update"
+   bindsym p exec --no-startup-id xterm -name sys_ping -e "ping 8.8.8.8"; mode "default"
+   bindsym w exec --no-startup-id wicd-gtk ; mode "default"
+   bindsym Return    mode "default"
+   bindsym Escape    mode "default"
+}
+
+##menu różne
+set $randmenu "[c]alculator [f]irefox [s]team [t]hunderbird [m]essenger [n]autilus spotif[y]"
+bindsym Mod4+Shift+p mode $randmenu
+mode $randmenu {
+   bindsym c exec --no-startup-id gnome-calculator; mode "default"
+   bindsym f exec --no-startup-id firefox;  mode "default"
+   bindsym s exec --no-startup-id steam; mode "default"
+   bindsym t exec --no-startup-id thunderbird; mode "default"
+   bindsym m exec --no-startup-id messengerfordesktop; mode "default"
+   bindsym n exec --no-startup-id nautilus; mode "default"
+   bindsym y exec --no-startup-id spotify; mode "default"
+   bindsym Return    mode "default"
+   bindsym Escape    mode "default"
+}
+
+font pango:Source Code Pro Regular 9
+
+bind Mod4+95 bar mode toggle
+
+bar {
+ status_command i3status
+ position top
+ modifier mod3
+ tray_output none
+ ############
+ ##i3-gaps 
+ height 20
+ i3bar_command i3bar -t
+ ############
+ font xft:Source Code Pro Regular 10
+ strip_workspace_numbers yes
+ #tray_output primary
+ colors {
+ background #00000088
+ ##what <border> <background> <text>
+ focused_workspace #00000088 #00000088 #FFFFFF
+ inactive_workspace #00000088 #00000088 #000000
+ }
+}
+bar {
+ status_command i3status
+ position top
+ modifier mod3
+ mode hide
+ hidden_state hide
+ ##i3-gaps 
+ height 20
+ i3bar_command i3bar -t
+ ##
+ font xft:Source Code Pro Regular 10
+ strip_workspace_numbers yes
+ #tray_output primary
+ colors {
+ background #00000088
+ ##what <border> <background> <text>
+ focused_workspace #00000088 #00000088 #FFFFFF
+ inactive_workspace #00000088 #00000088 #000000
+ }
+}
+
+set $up l
+set $down k
+set $left j
+set $right semicolon
+
+# use Mouse+Mod4 to drag floating windows to their wanted position
+floating_modifier Mod4
+
+# start a terminal
+bindsym Mod4+Return exec xterm
+
+# kill focused window
+bindsym Mod4+Shift+q kill
+
+
+# change focus
+bindsym Mod4+$left focus left
+bindsym Mod4+$down focus down
+bindsym Mod4+$up focus up
+bindsym Mod4+$right focus right
+
+# alternatively, you can use the cursor keys:
+bindsym Mod4+Left focus left
+bindsym Mod4+Down focus down
+bindsym Mod4+Up focus up
+bindsym Mod4+Right focus right
+
+# move focused window
+bindsym Mod4+Shift+$left move left
+bindsym Mod4+Shift+$down move down
+bindsym Mod4+Shift+$up move up
+bindsym Mod4+Shift+$right move right
+
+# alternatively, you can use the cursor keys:
+bindsym Mod4+Shift+Left move left
+bindsym Mod4+Shift+Down move down
+bindsym Mod4+Shift+Up move up
+bindsym Mod4+Shift+Right move right
+
+# split in horizontal orientation
+bindsym Mod4+h split h
+
+# split in vertical orientation
+bindsym Mod4+v split v
+
+# enter fullscreen mode for the focused container
+bindsym Mod4+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym Mod4+s layout stacking
+bindsym Mod4+w layout tabbed
+bindsym Mod4+e layout toggle split
+
+# toggle tiling / floating
+bindsym Mod4+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym Mod4+space focus mode_toggle
+
+# focus the parent container
+bindsym Mod4+a focus parent
+
+# focus the child container
+#bindsym Mod4+d focus child
+
+# switch to workspace
+bindsym Mod4+1 workspace $workspace1
+bindsym Mod4+2 workspace $workspace2
+bindsym Mod4+3 workspace $workspace3
+bindsym Mod4+4 workspace $workspace4
+bindsym Mod4+5 workspace $workspace5
+bindsym Mod4+6 workspace $workspace6
+bindsym Mod4+7 workspace $workspace7
+bindsym Mod4+8 workspace $workspace8
+bindsym Mod4+9 workspace $workspace9
+bindsym Mod4+0 workspace $workspace10
+
+
+# move focused container to workspace
+bindsym Mod4+Shift+1 move container to workspace $workspace1
+bindsym Mod4+Shift+2 move container to workspace $workspace2
+bindsym Mod4+Shift+3 move container to workspace $workspace3
+bindsym Mod4+Shift+4 move container to workspace $workspace4
+bindsym Mod4+Shift+5 move container to workspace $workspace5
+bindsym Mod4+Shift+6 move container to workspace $workspace6
+bindsym Mod4+Shift+7 move container to workspace $workspace7
+bindsym Mod4+Shift+8 move container to workspace $workspace8
+bindsym Mod4+Shift+9 move container to workspace $workspace9
+bindsym Mod4+Shift+0 move container to workspace $workspace10
+
+# reload the configuration file
+bindsym Mod4+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym Mod4+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym Mod4+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym $left       resize shrink width 10 px or 10 ppt
+        bindsym $down       resize grow height 10 px or 10 ppt
+        bindsym $up         resize shrink height 10 px or 10 ppt
+        bindsym $right      resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left        resize shrink width 10 px or 10 ppt
+        bindsym Down        resize grow height 10 px or 10 ppt
+        bindsym Up          resize shrink height 10 px or 10 ppt
+        bindsym Right       resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym Mod4+r mode "resize"
+
