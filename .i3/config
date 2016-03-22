@@ -31,11 +31,11 @@ set $workspace1 "1:Random"
 set $workspace2 "2:Messenger"
 set $workspace3 "3:Firefox"
 set $workspace4 "4:Nautilus"
-set $workspace5 "5"
+set $workspace5 "5:Random2"
 set $workspace6 "6:Steam"
 set $workspace7 "7"
 set $workspace8 "8"
-set $workspace9 "9"
+set $workspace9 "9:Thunderbird"
 set $workspace10 "10:Spotify"
 
 #########################
@@ -69,7 +69,8 @@ assign [class="Firefox"] → $workspace3
 
 for_window [class="Nautilus"] move to workspace $workspace4
 for_window [class="Spotify"] move to workspace $workspace10
-
+assign [class="Thunderbird"] → $workspace9 
+      for_window [class="Thunderbird"] border none
 ##AUTOSTART###
 ##dropbox
 exec --no-startup-id dropbox start
@@ -101,7 +102,7 @@ bindcode 124 mode $sysmenu
 mode $sysmenu {
     bindsym r         exec shutdown -r now; mode "default"
     bindsym q         exit; mode "default"
-    bindsym l         exec i3lock -i ~/Pobrane/BSOD.png -nu; mode "default"
+    bindsym l         exec i3lock -c 000000 -nu; mode "default"
     bindsym p         exec shutdown -P now ; mode "default"
     bindsym Return    mode "default"
     bindsym Escape    mode "default"
@@ -137,46 +138,26 @@ mode $randmenu {
 
 font pango:Source Code Pro Regular 9
 
-bind Mod4+95 bar mode toggle
 
 bar {
  status_command i3status
  position top
- modifier mod3
  tray_output none
- ############
- ##i3-gaps 
- height 20
- i3bar_command i3bar -t
- ############
- font xft:Source Code Pro Regular 10
- strip_workspace_numbers yes
- #tray_output primary
- colors {
- background #00000088
- ##what <border> <background> <text>
- focused_workspace #00000088 #00000088 #FFFFFF
- inactive_workspace #00000088 #00000088 #000000
- }
-}
-bar {
- status_command i3status
- position top
- modifier mod3
- mode hide
  hidden_state hide
+ ############
  ##i3-gaps 
- height 20
+ height 17
  i3bar_command i3bar -t
- ##
- font xft:Source Code Pro Regular 10
+ ############
+ font xft:Source Code Pro Regular 9.5
  strip_workspace_numbers yes
  #tray_output primary
  colors {
- background #00000088
- ##what <border> <background> <text>
- focused_workspace #00000088 #00000088 #FFFFFF
- inactive_workspace #00000088 #00000088 #000000
+     statusline #220055
+	 background #00996655
+	 ##what <border> <background> <text>
+	 focused_workspace #00996655 #00996655 #FFFF66
+	 inactive_workspace #00996655 #00996655 #220055
  }
 }
 
