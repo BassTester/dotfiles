@@ -9,29 +9,11 @@
 # layout, use the i3-config-wizard
 #
 #####################################################
-set $yellow	#b58900
-set $orange	#cb4b16
-set $red	#dc322f
-set $magenta	#d33682
-set $violet	#6c71c4
-set $blue	#268bd2
-set $cyan	#2aa198
-set $green	#859900
-set $baseA4 #1c1d1c
-set $baseA3 #002b36
-set $baseA2 #073642
-set $baseA1 #586e75
-set $baseA0 #657b83
-set $baseB0 #839496
-set $baseB1 #93a1a1
-set $baseB2 #eee8d5
-set $baseB3 #fdf6e3
-set $custom #1c5766
 set $workspace1 "1:Random"
 set $workspace2 "2:Messenger"
 set $workspace3 "3:Firefox"
-set $workspace4 "4:Nautilus"
-set $workspace5 "5:Random2"
+set $workspace4 "4:Thunar"
+set $workspace5 "5:Atom"
 set $workspace6 "6:Steam"
 set $workspace7 "7"
 set $workspace8 "8"
@@ -44,18 +26,10 @@ set $workspace10 "10:Spotify"
 gaps inner 10
 gaps outer 0
 smart_gaps on
+smart_borders on
 #########################
 
-###################
-# solarized (clean)
-###################
-#clientclass 			border  backgr. text 	indicator
-client.focused  		#222 $baseA4 $green $baseA1
-client.unfocused	    #222 $baseA4 $baseA1 $baseA1
-client.urgent 	 		$orange $orange $baseB3 $red
-client.urgent 	 		$yellow $yellow $baseB3 $orange
-client.focused_inactive 	$baseA2 $green $baseA2 $baseA1
-client.focused_inactive	#222 $baseA1 $baseA1 $baseA1
+
 
 ##przypisanie okien do workspaceów, znaleźć name i class używając xprop
 assign [title="Messenger"] → $workspace2
@@ -67,10 +41,17 @@ assign [title="Steam"] → $workspace6
 assign [class="Firefox"] → $workspace3
 	for_window [class="Firefox"] border none
 
-for_window [class="Nautilus"] move to workspace $workspace4
+for_window [class="Thunar"] move to workspace $workspace4
 for_window [class="Spotify"] move to workspace $workspace10
-assign [class="Thunderbird"] → $workspace9 
+assign [class="Thunderbird"] → $workspace9
       for_window [class="Thunderbird"] border none
+assign [class="Atom"] → $workspace5
+	for_window [class="Atom"] border none
+
+
+## title bar zmniejszenie
+  new_window 1pixel
+
 ##AUTOSTART###
 ##dropbox
 exec --no-startup-id dropbox start
@@ -78,9 +59,10 @@ exec --no-startup-id dropbox start
 exec --no-startup-id gnome-settings-daemon
 ##tapeta
 exec --no-startup-id nitrogen --restore
+##dekorator w trybie demona
 exec --no-startup-id compton -b
-## title bar zmniejszenie
-new_window 1pixel
+##alt+tab
+exec --no-startup-id rofi -key-window mod1+Tab font "snap 12" -bg "#272C38" -fg "#DF5A77" -hlbg "#285577" -hlfg "#ffffff" -opacity 100 -m 0 -location 2
 
 
 ##podświetlenie i glośność
@@ -92,7 +74,7 @@ bindcode 123 exec amixer -D pulse sset Master 5%+
 
 
 ##launcher rzeczy
-bindsym Mod4+Shift+d exec --no-startup-id rofi -show run -font "snap 10" -fg "#505050" -bg "#000000" -hlfg "#ffb964" -hlbg "#000000" -o 85 -.desktop
+bindsym Mod4+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -dmenu -bg "#272C38" -fg "#DF5A77" -hlbg "#285577" -hlfg "#ffffff" -opacity 100 -m 0 -location 2'
 ##screenshot
 bind Mod4+118 exec --no-startup-id gnome-screenshot
 
@@ -110,67 +92,76 @@ mode $sysmenu {
 
 
 ##menu narzędzia
-set $toolsmenu "[u]pdate&&upgrade [h]top [p]ing-google [w]icd-gtk"
+set $toolsmenu "[u]pdate&&upgrade [h]top [p]ing-google [w]ifi"
 bindsym Mod4+Shift+t mode $toolsmenu
 mode $toolsmenu {
-   bindsym h exec --no-startup-id xterm -name sys_htop -e "htop" ; mode "default"
-   bindsym u exec --no-startup-id xterm -name sys_update -e "update"
-   bindsym p exec --no-startup-id xterm -name sys_ping -e "ping 8.8.8.8"; mode "default"
-   bindsym w exec --no-startup-id wicd-gtk ; mode "default"
+   bindsym h exec --no-startup-id terminator --command "htop" ; mode "default"
+   bindsym u exec --no-startup-id terminator --command "update" ; mode "default"
+   bindsym p exec --no-startup-id terminator --command "ping 8.8.8.8"; mode "default"
+   bindsym w exec --no-startup-id nm-applet ; mode "default"
    bindsym Return    mode "default"
    bindsym Escape    mode "default"
 }
 
 ##menu różne
-set $randmenu "[c]alculator [f]irefox [s]team [t]hunderbird [m]essenger [n]autilus spotif[y]"
+set $randmenu "[a]tom [c]alculator [f]irefox [p]opcorn-time [s]team [t]hunderbird thuna[r] [m]essenger spotif[y]"
 bindsym Mod4+Shift+p mode $randmenu
 mode $randmenu {
+   bindsym a exec --no-startup-id atom; mode "default"
    bindsym c exec --no-startup-id gnome-calculator; mode "default"
    bindsym f exec --no-startup-id firefox;  mode "default"
    bindsym s exec --no-startup-id steam; mode "default"
+   bindsym p exec --no-startup-id ~/.Popcorn-Time/Popcorn-Time; mode "default"
    bindsym t exec --no-startup-id thunderbird; mode "default"
    bindsym m exec --no-startup-id messengerfordesktop; mode "default"
-   bindsym n exec --no-startup-id nautilus; mode "default"
+   bindsym r exec --no-startup-id thunar; mode "default"
    bindsym y exec --no-startup-id spotify; mode "default"
    bindsym Return    mode "default"
    bindsym Escape    mode "default"
 }
 
-font pango:Source Code Pro Regular 9
+font pango:SFNS Regular 9
 
 
 bar {
  status_command i3status
  position top
- tray_output none
- hidden_state hide
+ #tray_output none
  ############
- ##i3-gaps 
+ ##i3-gaps
  height 17
  i3bar_command i3bar -t
  ############
- font xft:Source Code Pro Regular 9.5
+ #font xft:Source Code Pro Regular 9.5
+ font xft:Ubuntu Regular 9
  strip_workspace_numbers yes
- #tray_output primary
+
  colors {
-     statusline #220055
-	 background #00996655
+   ##tło #272C38
+   ##różowy #DF5A77
+   ##fioletowy #814EE6
+   statusline #000000
+	 background #272C3800
+   separator #00000000
 	 ##what <border> <background> <text>
-	 focused_workspace #00996655 #00996655 #FFFF66
-	 inactive_workspace #00996655 #00996655 #220055
+	 focused_workspace #272C3800 #272C3800 #DF5A77
+	 inactive_workspace #272C3800 #272C3800 #555555
+   urgent_workspace #007030 #272C3800 #007030
  }
 }
-
-set $up l
-set $down k
-set $left j
-set $right semicolon
+########################################################
+#colors:                border  backgr. text    indicator
+client.focused          #007030 #007030 #ffffff #2b2b2b
+client.focused_inactive #888888 #2b2b2b #ffffff #2b2b2b
+client.unfocused        #88888800 #2b2b2b00 #000000 #2b2b2b
+client.urgent           #900000 #900000 #ffffff #2b2b2b
+########################################################
 
 # use Mouse+Mod4 to drag floating windows to their wanted position
 floating_modifier Mod4
 
 # start a terminal
-bindsym Mod4+Return exec xterm
+bindsym Mod4+Return exec terminator
 
 # kill focused window
 bindsym Mod4+Shift+q kill
@@ -255,8 +246,6 @@ bindsym Mod4+Shift+0 move container to workspace $workspace10
 bindsym Mod4+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym Mod4+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym Mod4+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -283,4 +272,3 @@ mode "resize" {
 }
 
 bindsym Mod4+r mode "resize"
-
