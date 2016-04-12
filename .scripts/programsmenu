@@ -1,0 +1,26 @@
+#!/bin/bash
+
+res=$(echo "2:Messenger|3:Firefox|4:Thunar|5:Atom|6:Steam|9:Thunderbird|0:Spotify" | rofi -sep "|" -dmenu -i -p 'Programy ' "" -bw 0 -bc "#dc1900" -bg "#1e1e20" -fg "#e0d8d1" -hlbg "#1e1e20" -hlfg "#dc1900" -width 15 -hide-scrollbar -eh 4 -location 1 -yoffset 23 -padding 35 -opacity 100 -font "Awesome 10, SFNS Regular 10" -auto-select)
+
+if [ $res = "5:Atom" ]; then
+  atom
+fi
+if [ $res = "3:Firefox" ]; then
+  firefox
+fi
+if [ $res = "4:Thunar" ]; then
+  thunar
+fi
+if [ $res = "2:Messenger" ]; then
+  messengerfordesktop
+fi
+if [ $res = "0:Spotify" ]; then
+    spotify
+fi
+if [ $res = "6:Steam" ]; then
+    steam
+fi
+if [ $res = "9:Thunderbird" ]; then
+    thunderbird
+fi
+exit 0
