@@ -15,8 +15,8 @@ set $workspace3 "3:Firefox"
 set $workspace4 "4:Thunar"
 set $workspace5 "5:Atom"
 set $workspace6 "6:Steam"
-set $workspace7 "7"
-set $workspace8 "8"
+set $workspace7 "7:VII"
+set $workspace8 "8:VIII"
 set $workspace9 "9:Thunderbird"
 set $workspace10 "10:Spotify"
 
@@ -62,7 +62,7 @@ exec --no-startup-id nitrogen --restore
 ##dekorator w trybie demona
 exec --no-startup-id compton -b
 ##alt+tab
-exec --no-startup-id rofi -key-window mod1+Tab font "snap 12" -bg "#272C38" -fg "#DF5A77" -hlbg "#285577" -hlfg "#ffffff" -opacity 100 -m 0 -location 2
+exec --no-startup-id rofi -key-window mod1+Tab font "snap 12" -bg "#1e1e20" -fg "#e0d8d1" -hlbg "#1e1e20" -hlfg "#dc1900" -opacity 100 -m 0 -location 2
 
 
 ##podświetlenie i glośność
@@ -74,51 +74,19 @@ bindcode 123 exec amixer -D pulse sset Master 5%+
 
 
 ##launcher rzeczy
-bindsym Mod4+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -dmenu -bg "#272C38" -fg "#DF5A77" -hlbg "#285577" -hlfg "#ffffff" -opacity 100 -m 0 -location 2'
+bindsym Mod4+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -dmenu -bg "#1e1e20" -fg "#e0d8d1" -hlbg "#1e1e20" -hlfg "#dc1900" -opacity 100 -m 0 -location 2'
 ##screenshot
 bind Mod4+118 exec --no-startup-id gnome-screenshot
 
-##power menu
-set $sysmenu "system:  [q]uit env. [l]ock [p]oweroff  [r]eboot"
-bindcode 124 mode $sysmenu
-mode $sysmenu {
-    bindsym r         exec shutdown -r now; mode "default"
-    bindsym q         exit; mode "default"
-    bindsym l         exec i3lock -c 000000 -nu; mode "default"
-    bindsym p         exec shutdown -P now ; mode "default"
-    bindsym Return    mode "default"
-    bindsym Escape    mode "default"
-}
+##power menu //rofi
+bindcode 124 exec ~/.scripts/rofipowermenu
 
+##launcher narzędzia //rofi
+bindsym Mod4+Shift+t exec ~/.scripts/toolsmenu
 
-##menu narzędzia
-set $toolsmenu "[u]pdate&&upgrade [h]top [p]ing-google [w]ifi"
-bindsym Mod4+Shift+t mode $toolsmenu
-mode $toolsmenu {
-   bindsym h exec --no-startup-id terminator --command "htop" ; mode "default"
-   bindsym u exec --no-startup-id terminator --command "update" ; mode "default"
-   bindsym p exec --no-startup-id terminator --command "ping 8.8.8.8"; mode "default"
-   bindsym w exec --no-startup-id nm-applet ; mode "default"
-   bindsym Return    mode "default"
-   bindsym Escape    mode "default"
-}
+##launcher programy //rofi
+bindsym Mod4+Shift+p exec ~/.scripts/programsmenu
 
-##menu różne
-set $randmenu "[a]tom [c]alculator [f]irefox [p]opcorn-time [s]team [t]hunderbird thuna[r] [m]essenger spotif[y]"
-bindsym Mod4+Shift+p mode $randmenu
-mode $randmenu {
-   bindsym a exec --no-startup-id atom; mode "default"
-   bindsym c exec --no-startup-id gnome-calculator; mode "default"
-   bindsym f exec --no-startup-id firefox;  mode "default"
-   bindsym s exec --no-startup-id steam; mode "default"
-   bindsym p exec --no-startup-id ~/.Popcorn-Time/Popcorn-Time; mode "default"
-   bindsym t exec --no-startup-id thunderbird; mode "default"
-   bindsym m exec --no-startup-id messengerfordesktop; mode "default"
-   bindsym r exec --no-startup-id thunar; mode "default"
-   bindsym y exec --no-startup-id spotify; mode "default"
-   bindsym Return    mode "default"
-   bindsym Escape    mode "default"
-}
 
 font pango:SFNS Regular 9
 
@@ -133,7 +101,7 @@ bar {
  i3bar_command i3bar -t
  ############
  #font xft:Source Code Pro Regular 9.5
- font xft:Ubuntu Regular 9
+ font xft:Ubuntu Regular, FontAwesome 10
  strip_workspace_numbers yes
 
  colors {
