@@ -20,18 +20,18 @@ set $workspace8 "8:VIII"
 set $workspace9 "9:Thunderbird"
 set $workspace10 "10:Spotify"
 
-#########################
-##ustawienia pod i3-gaps#
-#########################
-gaps inner 10
+############################
+##i3-gaps specific settings#
+############################
+gaps inner 7
 gaps outer 0
 smart_gaps on
 smart_borders on
+for_window [class="^.*"] border pixel 2
 #########################
 
 
-
-##przypisanie okien do workspaceów, znaleźć name i class używając xprop
+##assigning windows to workspaces according to their classes/titles, to find them use xprop
 assign [title="Messenger"] → $workspace2
     for_window [title="Messenger"] border none
 
@@ -48,24 +48,22 @@ assign [class="Thunderbird"] → $workspace9
 assign [class="Atom"] → $workspace5
 	for_window [class="Atom"] border none
 
-
-## title bar zmniejszenie
-  new_window 1pixel
-
 ##AUTOSTART###
 ##dropbox
 exec --no-startup-id dropbox start
-##dodatki z gnoma
+##gnome addons
 exec --no-startup-id gnome-settings-daemon
-##tapeta
+##wallpaper
 exec --no-startup-id nitrogen --restore
-##dekorator w trybie demona
+##compton in daemon mode
 exec --no-startup-id compton -b
 ##alt+tab
-exec --no-startup-id rofi -key-window mod1+Tab font "snap 12" -bg "#1e1e20" -fg "#e0d8d1" -hlbg "#1e1e20" -hlfg "#dc1900" -opacity 100 -m 0 -location 2
+exec --no-startup-id rofi -key-window mod1+Tab font "snap 12" bc "#002b36" -bg "#002b36" -fg "#cb4b16" -hlbg "#002b36" -hlfg "#cb4b16" -opacity 100 -m 0 -location 2
+##barr
+#exec --no-startup-id ~/.scripts/barr_run.sh
 
 
-##podświetlenie i glośność
+##backlight and volume
 bindcode 232 exec xbacklight -dec 10
 bindcode 233 exec xbacklight -inc 10
 bindcode 121 exec amixer -D pulse set Master 1+ toggle
@@ -73,23 +71,21 @@ bindcode 122 exec amixer -D pulse sset Master 5%-
 bindcode 123 exec amixer -D pulse sset Master 5%+
 
 
-##launcher rzeczy
-bindsym Mod4+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -dmenu -bg "#1e1e20" -fg "#e0d8d1" -hlbg "#1e1e20" -hlfg "#dc1900" -opacity 100 -m 0 -location 2'
+##dmenu
+bindsym Mod4+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -dmenu -bc "#002b36" -bg "#002b36" -fg "#cb4b16" -hlbg "#002b36" -hlfg "#cb4b16" -opacity 100 -m 0 -location 2'
 ##screenshot
 bind Mod4+118 exec --no-startup-id gnome-screenshot
 
 ##power menu //rofi
 bindcode 124 exec ~/.scripts/rofipowermenu
 
-##launcher narzędzia //rofi
+##launcher tools //rofi
 bindsym Mod4+Shift+t exec ~/.scripts/toolsmenu
 
-##launcher programy //rofi
+##launcher programs //rofi
 bindsym Mod4+Shift+p exec ~/.scripts/programsmenu
 
-
-font pango:SFNS Regular 9
-
+font pango:FontAwesome 9.5
 
 bar {
  status_command i3status
@@ -97,32 +93,29 @@ bar {
  #tray_output none
  ############
  ##i3-gaps
- height 17
- i3bar_command i3bar -t
+ height 20
+ #i3bar_command i3bar -t
  ############
- #font xft:Source Code Pro Regular 9.5
- font xft:Ubuntu Regular, FontAwesome 10
+
+ font xft:FontAwesome 9.5
  strip_workspace_numbers yes
 
  colors {
-   ##tło #272C38
-   ##różowy #DF5A77
-   ##fioletowy #814EE6
-   statusline #000000
-	 background #272C3800
-   separator #00000000
+   statusline #cb4b16
+	 background #002b36
+   separator #002b36
 	 ##what <border> <background> <text>
-	 focused_workspace #272C3800 #272C3800 #DF5A77
-	 inactive_workspace #272C3800 #272C3800 #555555
-   urgent_workspace #007030 #272C3800 #007030
+	 focused_workspace #002b36 #002b36 	#b58900
+	 inactive_workspace #002b36 #002b36 #cb4b16
+   urgent_workspace #002b36 #002b36 #859900
  }
 }
 ########################################################
 #colors:                border  backgr. text    indicator
-client.focused          #007030 #007030 #ffffff #2b2b2b
-client.focused_inactive #888888 #2b2b2b #ffffff #2b2b2b
-client.unfocused        #88888800 #2b2b2b00 #000000 #2b2b2b
-client.urgent           #900000 #900000 #ffffff #2b2b2b
+client.focused          #073642 #073642 #b58900 #cb4b16
+client.focused_inactive #073642 #073642 #ffffff #2b2b2b
+client.unfocused        #073642 #002b36 #cb4b16 #cb4b16
+client.urgent           #073642 #073642 #859900 #2b2b2b
 ########################################################
 
 # use Mouse+Mod4 to drag floating windows to their wanted position
@@ -133,6 +126,8 @@ bindsym Mod4+Return exec terminator
 
 # kill focused window
 bindsym Mod4+Shift+q kill
+# kill focused window
+bind mod1+70 kill
 
 
 # change focus
