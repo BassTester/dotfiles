@@ -9,21 +9,21 @@
 # layout, use the i3-config-wizard
 #
 #####################################################
-set $workspace1 "1:Random"
-set $workspace2 "2:Messenger"
-set $workspace3 "3:Firefox"
-set $workspace4 "4:Thunar"
-set $workspace5 "5:Atom"
-set $workspace6 "6:Steam"
+set $workspace1 "1:"
+set $workspace2 "2:"
+set $workspace3 "3:"
+set $workspace4 "4:"
+set $workspace5 "5:"
+set $workspace6 "6:"
 set $workspace7 "7:VII"
 set $workspace8 "8:VIII"
-set $workspace9 "9:Thunderbird"
-set $workspace10 "10:Spotify"
-
+set $workspace9 "9:"
+set $workspace10 "10:"
+set $mod Mod4
 ############################
 ##i3-gaps specific settings#
 ############################
-gaps inner 7
+gaps inner 5
 gaps outer 0
 smart_gaps on
 smart_borders on
@@ -47,6 +47,15 @@ assign [class="Thunderbird"] → $workspace9
       for_window [class="Thunderbird"] border none
 assign [class="Atom"] → $workspace5
 	for_window [class="Atom"] border none
+
+
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="bubble"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [window_role="Preferences"] floating enable
+
+for_window [window_type="dialog"] floating enable
+for_window [window_type="menu"] floating enable
 
 ##AUTOSTART###
 ##dropbox
@@ -85,37 +94,77 @@ bindsym Mod4+Shift+t exec ~/.scripts/toolsmenu
 ##launcher programs //rofi
 bindsym Mod4+Shift+p exec ~/.scripts/programsmenu
 
+##lockscreen
+bindsym Mod4+Shift+l exec i3lock -bc 000000
+
+set $mode_gaps Gaps: (o) outer, (i) inner
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+bindsym $mod+Shift+g mode "$mode_gaps"
+
+mode "$mode_gaps" {
+        bindsym o      mode "$mode_gaps_outer"
+        bindsym i      mode "$mode_gaps_inner"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+mode "$mode_gaps_inner" {
+        bindsym plus  gaps inner current plus 1
+        bindsym minus gaps inner current minus 1
+        bindsym 0     gaps inner current set 0
+
+        bindsym Shift+plus  gaps inner all plus 1
+        bindsym Shift+minus gaps inner all minus 1
+        bindsym Shift+0     gaps inner all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_outer" {
+        bindsym plus  gaps outer current plus 1
+        bindsym minus gaps outer current minus 1
+        bindsym 0     gaps outer current set 0
+
+        bindsym Shift+plus  gaps outer all plus 1
+        bindsym Shift+minus gaps outer all minus 1
+        bindsym Shift+0     gaps outer all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
 font pango:FontAwesome 9.5
 
 bar {
- status_command i3status
+ #status_command i3status
+ status_command i3blocks
  position top
  #tray_output none
  ############
  ##i3-gaps
- height 20
- #i3bar_command i3bar -t
+ height 25
+ i3bar_command i3bar -t
  ############
-
- font xft:FontAwesome 9.5
+ font pango:Hack, FontAwesome 10.5
  strip_workspace_numbers yes
 
  colors {
-   statusline #cb4b16
-	 background #002b36
+   statusline #7f8c8d
+	 background #002b3600
    separator #002b36
 	 ##what <border> <background> <text>
-	 focused_workspace #002b36 #002b36 	#b58900
-	 inactive_workspace #002b36 #002b36 #cb4b16
-   urgent_workspace #002b36 #002b36 #859900
+	 focused_workspace #002b3600 #002b3600 	#d35400
+	 inactive_workspace #002b3600 #002b3600 #93a1a1
+   urgent_workspace #002b3600 #002b3600 #859900
  }
 }
 ########################################################
 #colors:                border  backgr. text    indicator
-client.focused          #073642 #073642 #b58900 #cb4b16
-client.focused_inactive #073642 #073642 #ffffff #2b2b2b
-client.unfocused        #073642 #002b36 #cb4b16 #cb4b16
-client.urgent           #073642 #073642 #859900 #2b2b2b
+client.focused          #212121 #212121 #F57C00 #cb4b16
+client.focused_inactive #212121 #212121 #ffffff #2b2b2b
+client.unfocused        #212121 #212121 #009688 #cb4b16
+client.urgent           #212121 #212121 #D32F2F #2b2b2b
 ########################################################
 
 # use Mouse+Mod4 to drag floating windows to their wanted position
