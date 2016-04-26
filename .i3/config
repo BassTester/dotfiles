@@ -154,9 +154,9 @@ bar {
 	 background #002b3600
    separator #002b36
 	 ##what <border> <background> <text>
-	 focused_workspace #002b3600 #002b3600 	#d35400
+	 focused_workspace #002b3600 #002b3600 	#FFAE00
 	 inactive_workspace #002b3600 #002b3600 #93a1a1
-   urgent_workspace #002b3600 #002b3600 #859900
+   urgent_workspace #002b3600 #002b3600 #FF0000
  }
 }
 ########################################################
