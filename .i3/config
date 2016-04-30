@@ -67,32 +67,32 @@ exec --no-startup-id nitrogen --restore
 ##compton in daemon mode
 exec --no-startup-id compton -b
 ##alt+tab
-exec --no-startup-id rofi -key-window mod1+Tab font "snap 12" bc "#002b36" -bg "#002b36" -fg "#cb4b16" -hlbg "#002b36" -hlfg "#cb4b16" -opacity 100 -m 0 -location 2
-##barr
-#exec --no-startup-id ~/.scripts/barr_run.sh
+exec --no-startup-id rofi -key-window mod1+Tab font "snap 12" bc "#002b36" -bg "#212121" -fg "#F57C00" -hlbg "#535353" -hlfg "#F57C00" -opacity 100 -m 0 -location 2
+##redshift
+exec --no-startup-id redshift
 
 
 ##backlight and volume
-bindcode 232 exec xbacklight -dec 10
+bindcode 232 exec xbacklight -dec 10;
 bindcode 233 exec xbacklight -inc 10
-bindcode 121 exec amixer -D pulse set Master 1+ toggle
-bindcode 122 exec amixer -D pulse sset Master 5%-
-bindcode 123 exec amixer -D pulse sset Master 5%+
+bindcode 121 exec amixer -D pulse set Master 1+ toggle , exec pkill -RTMIN+1 i3blocks
+bindcode 122 exec amixer -D pulse sset Master 5%- , exec pkill -RTMIN+1 i3blocks
+bindcode 123 exec amixer -D pulse sset Master 5%+ , exec pkill -RTMIN+1 i3blocks
 
 
 ##dmenu
-bindsym Mod4+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -dmenu -bc "#002b36" -bg "#002b36" -fg "#cb4b16" -hlbg "#002b36" -hlfg "#cb4b16" -opacity 100 -m 0 -location 2'
+bindsym Mod4+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -dmenu -bc "#212121" -bg "#212121" -fg "#F57C00" -hlbg "#535353" -hlfg "#F57C00" -opacity 100 -m 0 -location 2'
 ##screenshot
 bind Mod4+118 exec --no-startup-id gnome-screenshot
 
 ##power menu //rofi
-bindcode 124 exec ~/.scripts/rofipowermenu
+bindcode 124 exec ~/.scripts/rofi/rofipowermenu
 
 ##launcher tools //rofi
-bindsym Mod4+Shift+t exec ~/.scripts/toolsmenu
+bindsym Mod4+Shift+t exec ~/.scripts/rofi/toolsmenu
 
 ##launcher programs //rofi
-bindsym Mod4+Shift+p exec ~/.scripts/programsmenu
+bindsym Mod4+Shift+p exec ~/.scripts/rofi/programsmenu
 
 ##lockscreen
 bindsym Mod4+Shift+l exec i3lock -bc 000000

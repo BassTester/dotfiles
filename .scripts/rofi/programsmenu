@@ -1,7 +1,7 @@
 #!/bin/bash
 
 res=$(echo "2:Messenger|3:Firefox|4:Thunar|5:Atom|6:Steam|9:Thunderbird|0:Spotify" |
-rofi -sep "|" -dmenu -i -p 'Programy ' "" -bw 0 -bc "#002b36" -bg "#002b36" -fg "#cb4b16" -hlbg "#002b36" -hlfg "#cb4b16" -width 15 -hide-scrollbar -eh 4  -padding 35 -opacity 100 -font "SFNS Regular 10" -auto-select)
+rofi -sep "|" -dmenu -i -p 'Programy ' "" -bw 0 -bc "#212121" -bg "#212121" -fg "#F57C00" -hlbg "#535353" -hlfg "#F57C00" -width 15 -hide-scrollbar -eh 4  -padding 35 -opacity 100 -font "SFNS Regular 10" -auto-select)
 
 if [ $res = "5:Atom" ]; then
   atom

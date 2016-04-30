@@ -1,0 +1,21 @@
+#!/bin/bash
+
+res=$(echo "1:Htop|2:Ping|3:Wifi|4:Redshift|5:Stop Redshift" | rofi -sep "|" -dmenu -i -p 'Narzędzia ' "" -bw 0 -bc "#212121" -bg "#212121" -fg "#F57C00" -hlbg "#535353" -hlfg "#F57C00" -width 15 -hide-scrollbar -eh 4  -padding 35 -opacity 100 -font "SFNS Regular 10" -auto-select)
+
+if [ $res = "1:Htop" ]; then
+  terminator --command "htop"
+fi
+if [ $res = "2:Ping" ]; then
+  terminator --command "ping 8.8.8.8"
+fi
+if [ $res = "3:Wifi" ]; then
+  nm-applet
+fi
+if [ $res = "4:Redshift" ]; then
+  redshift
+fi
+if [ $res = "5:Stop Redshift" ]; then
+  killall redshift
+fi
+
+exit 0
